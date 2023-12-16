@@ -1,2 +1,2 @@
-# robotron
+# Robotron
 Robotron pygame game

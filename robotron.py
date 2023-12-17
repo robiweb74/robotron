@@ -116,27 +116,55 @@ while running:
         if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     if robo_pos[0] > 1 and board[robo_pos[1]][robo_pos[0] - 1] != 0:# Ensure it doesn't go out of bounds
-                        robo_pos[0] -= 1
+                        if board[robo_pos[1]][robo_pos[0]-1] == 4 and board[robo_pos[1]][robo_pos[0]-2] == 3:
+                            board[robo_pos[1]][robo_pos[0]] = 3
+                            board[robo_pos[1]][robo_pos[0]-1] = 1
+                            board[robo_pos[1]][robo_pos[0]-2] = 4
+                            robo_pos[0] -= 1
+                        elif board[robo_pos[1]][robo_pos[0]-1] == 3:
+                            board[robo_pos[1]][robo_pos[0]-1] = 1
+                            board[robo_pos[1]][robo_pos[0]] = 3
+                            robo_pos[0] -= 1
                 elif event.key == pygame.K_RIGHT:
                     if robo_pos[0] < COLS - 2 and board[robo_pos[1]][robo_pos[0] + 1] != 0:
-                        robo_pos[0] += 1
+                        if board[robo_pos[1]][robo_pos[0]+1] == 4 and board[robo_pos[1]][robo_pos[0]+2] == 3:
+                            board[robo_pos[1]][robo_pos[0]] = 3
+                            board[robo_pos[1]][robo_pos[0]+1] = 1
+                            board[robo_pos[1]][robo_pos[0]+2] = 4
+                            robo_pos[0] += 1
+                        elif board[robo_pos[1]][robo_pos[0]+1] == 3:
+                            board[robo_pos[1]][robo_pos[0]+1] = 1
+                            board[robo_pos[1]][robo_pos[0]] = 3
+                            robo_pos[0] += 1
                 elif event.key == pygame.K_UP:
                     if robo_pos[1] > 1 and board[robo_pos[1] - 1][robo_pos[0]] != 0:
-                        if board[robo_pos[1] - 1][robo_pos[0]] == 4 and board[robo_pos[1] - 2][robo_pos[0]] != 0:
+                        if board[robo_pos[1]-1][robo_pos[0]] == 4 and board[robo_pos[1]-2][robo_pos[0]] == 3:
                             board[robo_pos[1]][robo_pos[0]] = 3
-                            board[robo_pos[1]-1][robo_pos[0]] = 3
+                            board[robo_pos[1]-1][robo_pos[0]] = 1
                             board[robo_pos[1]-2][robo_pos[0]] = 4
                             robo_pos[1] -= 1
-                        elif board[robo_pos[1] - 1][robo_pos[0]] == 4 and board[robo_pos[1] - 2][robo_pos[0]] == 0:
-                            pass
-                        else:
+                        elif board[robo_pos[1]-1][robo_pos[0]] == 3:
+                            board[robo_pos[1]-1][robo_pos[0]] = 1
+                            board[robo_pos[1]][robo_pos[0]] = 3
                             robo_pos[1] -= 1
                 elif event.key == pygame.K_DOWN:
                     if robo_pos[1] < ROWS - 2 and board[robo_pos[1] + 1][robo_pos[0]] != 0:
-                        robo_pos[1] += 1
+                        if board[robo_pos[1]+1][robo_pos[0]] == 4 and board[robo_pos[1]+2][robo_pos[0]] == 3:
+                            board[robo_pos[1]][robo_pos[0]] = 3
+                            board[robo_pos[1]+1][robo_pos[0]] = 1
+                            board[robo_pos[1]+2][robo_pos[0]] = 4
+                            robo_pos[1] += 1    
+                        elif board[robo_pos[1]+1][robo_pos[0]] == 3:
+                            board[robo_pos[1]+1][robo_pos[0]] = 1
+                            board[robo_pos[1]][robo_pos[0]] = 3
+                            robo_pos[1] += 1
+                            
+                            
 
                 # Update the grid
-                print(board)
+                for row in board:
+                    print(row)
+                print("xxxxxxxxx")
       
     
     pygame.display.flip()

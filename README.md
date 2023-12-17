@@ -4,5 +4,6 @@ Robotron pygame game
 
 TODO:
 - rewrite with class
-- create play logic
-- add function to load new rooms
+- create doorexit() function (which load new room)
+- add other obstacle
+- track room which was solved

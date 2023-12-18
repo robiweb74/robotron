@@ -7,12 +7,21 @@ cell_size = 32
 board_size = 9
 height = board_size * cell_size
 width = board_size * cell_size
-wall_image = pygame.image.load('wall.bmp')
-robo_image = pygame.image.load('robo.bmp')
-door_image = pygame.image.load('door.bmp')
-space_image = pygame.image.load('space.bmp') 
-dinamico_image = pygame.image.load('dinamico.bmp')
-dinexplo_image = pygame.image.load('dinexplo.bmp')  
+
+# Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Robotron")
+clock = pygame.time.Clock()
+
+
+# load pictures
+wall_image = pygame.image.load('wall.bmp').convert_alpha()
+robo_image = pygame.image.load('robo.bmp').convert_alpha()
+door_image = pygame.image.load('door.bmp').convert_alpha()
+space_image = pygame.image.load('space.bmp').convert_alpha() 
+dinamico_image = pygame.image.load('dinamico.bmp').convert_alpha()
+dinexplo_image = pygame.image.load('dinexplo.bmp').convert_alpha()  
 
 pics=["wall_image","robo_image","door_image","space_image", "dinamico_image", "dinexplo_image"]
 # wall index = 0
@@ -27,11 +36,6 @@ space_id = pics.index('space_image')
 dinamico_id = pics.index('dinamico_image')
 dinexplo_id = pics.index('dinexplo_image')
 
-# Initialize Pygame
-pygame.init()
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Robotron")
-clock = pygame.time.Clock()
 
 # Create a 2D list representing the board
 board = [[0 for _ in range(board_size)] for _ in range(board_size)]
@@ -64,14 +68,10 @@ def draw_board():
                 elif i == "2":
                     board[col][row] = 4
                     row += 1
-
-
-
                 
-                
-                
-
+# Rooms
 room1 = "0000102002220022201200202200220002202201212202000"
+
 draw_board()
 def draw_screenboard(board):
     col = 0

@@ -1,5 +1,6 @@
 import pygame
 import sys
+from rooms import *
 
 # Constants
 ROWS, COLS = 9, 9
@@ -34,12 +35,13 @@ image_map = {
 # Create a 2D list representing the board
 board = [[0 for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 # Function to draw the board with walls
-def draw_board():
-    global board, room1
+def draw_board(room):
+    global board
+
     col = 1
     row = 1
 
-    for i in room1:
+    for i in room:
         if row == 8:
             col += 1
             row = 1
@@ -54,11 +56,8 @@ def draw_board():
 
             row += 1
                 
-
-room1 = "0000102002220022201200202200220002202201212202000"
-
 # Draw a grid
-draw_board()
+draw_board(room[0])
 
 def draw_screenboard(board):
     door_positions = [(0, 4), (8, 4)]  # Define door positions

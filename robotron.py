@@ -8,6 +8,7 @@ CELL_SIZE = 32
 BOARD_SIZE = 9
 HEIGHT = BOARD_SIZE * CELL_SIZE
 WIDTH = BOARD_SIZE * CELL_SIZE
+ROOM_NUMBER=0
 
 # Initialize Pygame
 pygame.init()
@@ -81,6 +82,7 @@ def draw_screenboard(board):
 def move_robot(dx, dy):
     new_x = robo_pos[0] + dx
     new_y = robo_pos[1] + dy
+    global ROOM_NUMBER
 
     if 0 <= new_x < COLS and 0 <= new_y < ROWS and board[new_y][new_x] != 0:
         if board[new_y][new_x] == 4:
@@ -96,6 +98,12 @@ def move_robot(dx, dy):
             board[robo_pos[1]][robo_pos[0]] = 3
             robo_pos[0] = new_x
             robo_pos[1] = new_y
+        elif board[new_y][new_x] == 2:
+            ROOM_NUMBER+=1
+            board[robo_pos[1]][robo_pos[0]] = 3
+            robo_pos[0] = new_x - (8*dx)
+            robo_pos[1] = new_y
+            draw_board(room[ROOM_NUMBER])
 
 def find_last_position(x, y, dx, dy):
     while 0 <= x < COLS and 0 <= y < ROWS:

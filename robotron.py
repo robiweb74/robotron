@@ -79,32 +79,35 @@ def draw_screenboard(board):
         screen.blit(door_image, (door_pos[0] * CELL_SIZE, door_pos[1] * CELL_SIZE))
         board[door_pos[1]][door_pos[0]] = 2  # Set board position as a door
 
-def move_robot(direction, robo_pos, board):
-    new_x, new_y = robo_pos[0], robo_pos[1]
+def move_robot(dx, dy):
+    new_x = robo_pos[0] + dx
+    new_y = robo_pos[1] + dy
 
-    if direction == 'left':
-        new_x -= 1
-    elif direction == 'right':
-        new_x += 1
-    elif direction == 'up':
-        new_y -= 1
-    elif direction == 'down':
-        new_y += 1
-
-    if (
-        0 <= new_x < len(board[0]) - 1
-        and 0 <= new_y < len(board) - 1
-        and board[new_y][new_x] != 0
-    ):
-        if board[new_y][new_x] == 4 and board[new_y * 2 - robo_pos[1]][new_x * 2 - robo_pos[0]] == 3:
-            board[robo_pos[1]][robo_pos[0]] = 3
-            board[new_y][new_x] = 1
-            board[new_y * 2 - robo_pos[1]][new_x * 2 - robo_pos[0]] = 4
-            robo_pos[0], robo_pos[1] = new_x, new_y
+    if 0 <= new_x < COLS and 0 <= new_y < ROWS and board[new_y][new_x] != 0:
+        if board[new_y][new_x] == 4:
+            last_position = find_last_position(new_x, new_y, dx, dy)
+            if last_position and board[last_position[1]][last_position[0]] != 2:
+                board[last_position[1]][last_position[0]] = 4
+                board[robo_pos[1]][robo_pos[0]] = 3
+                robo_pos[0] = new_x
+                robo_pos[1] = new_y
+                board[robo_pos[1]][robo_pos[0]] = 1
         elif board[new_y][new_x] == 3:
             board[new_y][new_x] = 1
             board[robo_pos[1]][robo_pos[0]] = 3
-            robo_pos[0], robo_pos[1] = new_x, new_y
+            robo_pos[0] = new_x
+            robo_pos[1] = new_y
+
+def find_last_position(x, y, dx, dy):
+    while 0 <= x < COLS and 0 <= y < ROWS:
+        if board[y][x] == 3:
+            return [x, y]
+        elif board[y][x] == 4:
+            x += dx
+            y += dy
+        elif board[y][x] == 2 or board[y][x] == 0:
+            break
+    return None
 
 # Robo start position
 robo_pos = [1, 4]
@@ -128,13 +131,13 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                move_robot('left', robo_pos, board)
+                move_robot(-1, 0)
             elif event.key == pygame.K_RIGHT:
-                move_robot('right', robo_pos, board)
+                move_robot(1, 0)
             elif event.key == pygame.K_UP:
-                move_robot('up', robo_pos, board)
+                move_robot(0, -1)
             elif event.key == pygame.K_DOWN:
-                move_robot('down', robo_pos, board)
+                move_robot(0, 1)
                             
                             
     # Print grid to check if work
